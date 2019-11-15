@@ -1,0 +1,71 @@
+/*
+ File: HW6/css/styles.css
+ Full name: Yassir Kanane
+ COMP 4601 Assignment 6
+ Yassir Kanane, UMass Lowell Computer Science, yassir_kanane@student.uml.edu
+ Updated on Nov. 11, 2019 at 3:47 PM */
+
+/*Defining table properties, source: https://www.w3schools.com/html/html_tables.asp */
+
+th, thead {
+  border: 2px solid white;
+  color: white;
+  background: black;
+}
+
+/*Used two different nth-child combinations to get a checkered like style
+used this to play around and test things https://css-tricks.com/examples/nth-child-tester/*/
+tr:nth-child(2n) td:nth-child(2n+1){
+  border: 2px solid red;
+  background: white;
+}
+tr:nth-child(2n+1) td:nth-child(2n){
+  border: 2px solid red;
+  background: white;
+}
+td{
+  border: 2px solid black;
+}
+
+h1 {
+ color: white;
+ background-image: url("../codepic.jpg");
+ background-size: auto;
+ text-align: center;
+ font: italic 250% fantasy;
+}
+h1 {
+  font: italic 250% fantasy;
+  border: 3px ridge black;
+  border-radius: 20px;
+  text-align: center;
+}
+/*set padding for forms*/
+#row-first, #row-last, #col-first, #col-last{
+  padding-top: 10px;
+}
+
+#range {
+  margin-left: 20px;
+  font: italic 120% fantasy;
+  color: black;
+}
+
+/*Set colors for the error messages*/
+#x1, #x2, #y1, #y2 {
+  color: red;
+}
+
+#x12,#x22,#y12,#y22{
+  color: orange;
+}
+
+body{
+  background-color: #1F6AB6;
+}
+
+.container{
+  color: black;
+  background-color: cyan;
+  border-radius: 20px;
+}

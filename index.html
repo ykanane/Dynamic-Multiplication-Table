@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+ File: HW6/index.html
+ Full name: Yassir Kanane
+ COMP 4601 Assignment 6
+ Yassir Kanane, UMass Lowell Computer Science, yassir_kanane@student.uml.edu
+ Updated on Nov. 11, 2019 at 3:47 PM
+ This is a dynamic Multiplication table web app
+-->
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Dynamic Multiplication Table</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+        <link href="css/style.css" type="text/css"
+        rel="stylesheet" />
+    </head>
+    <!-- p tags are placeholders for the error message for invalid input
+    Form specifies that the input type is a number and enforces that, the only cases
+    that need to be checked are blank and a lone negative sign, which is handled in the
+    javascript-->
+    <body>
+      <div class="container">
+        <h1>Dynamic Multiplication Table</h1>
+
+        <div class ="row">
+            <div class="col-sm-6">
+              <form id="range">
+                <p>Please enter one integer in each box for horizontal axis bounds:</p>
+                <input type="number" id="row-first"><br>
+                <p id='x1'></p>
+                <p id='x12'></p>
+                <input type="number" id="row-last"><br>
+                <p id='x2'> </p>
+                <p id='x22'> </p>
+                <p>Please enter one integer in each box for vertical axis bounds:</p>
+                <input type="number" id="col-first"><br>
+                <p id='y1'></p>
+                <p id='y12'></p>
+                <input type="number" id="col-last"><br>
+                <p id='y2'></p>
+                <p id='y22'></p>
+                <input type="button" onclick="generateTable()" value = "GENERATE">
+              </form>
+              <br>
+           </div>
+
+          <div class="col-sm-6">
+              <p>Once table is generated, scroll horizontally by clicking and dragging or using the scroll bar in the bottom of the table </p>
+                <!-- Placeholder for table, uses bootstrap classes-->
+              <div class="table-responsive">
+                    <table class="table table-striped">
+                    </table>
+              </div>
+           </div>
+
+       </div> <!-- end row div-->
+
+       <script src="js/add-content.js"></script>
+   </body>
+</html>
