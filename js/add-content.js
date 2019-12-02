@@ -1,29 +1,19 @@
 /*
  File: HW6/js/add-content.js
  Full name: Yassir Kanane
- COMP 4601 Assignment 6
+ COMP 4601 Assignment 7
  Yassir Kanane, UMass Lowell Computer Science, yassir_kanane@student.uml.edu
- Updated on Nov. 11, 2019 at 3:47 PM */
+ Updated on Dec. 1, 2019 at 3:47 PM */
 
 function generateTable(){
-  //use parseInt function to convert to int
-  var x1 = parseFloat(document.getElementById('row-first').value);
-  var x2 = parseFloat(document.getElementById('row-last').value);
-  var y1 = parseFloat(document.getElementById('col-first').value);
-  var y2 = parseFloat(document.getElementById('col-last').value);
 
+  //use parseInt function to convert to int
   var xFirst = parseInt(document.getElementById('row-first').value);
   var xLast = parseInt(document.getElementById('row-last').value);
   var yFirst = parseInt(document.getElementById('col-first').value);
   var yLast = parseInt(document.getElementById('col-last').value);
   var table = document.getElementsByClassName("table");
 
-  //abort table generation if input is invalid
-  var flag = validateInput(xFirst,xLast,yFirst,yLast);
-  if(flag == 'Error'){
-    return;
-  }
-  checkForFloats(x1,x2,y1,y2,flag);
   //check if input was entered out of order and swap accordingly
   if(xFirst > xLast){
     var temp = xFirst;
@@ -60,97 +50,74 @@ function generateTable(){
 
 }
 
+//when document is fully loaded, select the form by id and trigger the validate with specified rules
+//learned about this from http://webreference.com/programming/javascript/jquery/form_validation/index-2.html
+$(document).ready(function(){
+    //Learned about this from this link: https://stackoverflow.com/questions/41779800/jquery-validate-validate-one-field-at-a-time
+    //This prevents every field getting an error message while still allowing disabling and enabling the submit button
+    $('#inputForm').on('blur keyup', function () { // fires on every blur
+        if ($('#inputForm').validate().checkForm()) {  // checks form for validity but doesnt trigger error messages
+              $('#submitButton').prop('disabled', false);   // setting button attribute "disabled" to false will enable the button
+        }
+        else {
+              $('#submitButton').prop('disabled', true);   // disables button
+        }
+    });
+    //Define what rules should be applied to the form fields
+  	$( "#inputForm" ).validate({
+      	 rules:{
+             rowFirst:{
+               required: true,
+               checkFloat: true,
+               checkRange: true
+             },
+            rowLast:{
+                required: true,
+                checkFloat: true,
+                checkRange: true
+            },
+          	colFirst:{
+                required: true,
+                checkFloat: true,
+                checkRange: true
+          	},
+            colLast:{
+                required: true,
+                checkFloat: true,
+                checkRange: true
+            }
+      	},
+        //custom error message based on error
+  	   messages: {
+             rowFirst:{
+                 required:"Both bounds are required for horizontal axis.",
+                 number: "Please enter a valid integer."
+             },
+            rowLast:{
+                required: "Both bounds are required for horizontal axis.",
+                number: "Please enter a valid integer."
+            },
+           colFirst:{
+               required: "Both bounds are required for vertical axis.",
+               number: "Please enter a valid integer."
+           },
+            colLast:{
+               required: "Both bounds are required for vertical axis.",
+               number: "Please enter a valid integer."
+            }
+  	   }
+	});
 
-/* Check each input in its own condition and modify the html accordingly
-learned about isInteger function here:
-https://www.w3schools.com/jsref/jsref_isinteger.asp*/
-function validateInput(x1,x2,y1,y2){
-    var error = "Invalid input! Please make sure you enter an integer.";
-    var flag = 0;
-    if(!(Number.isInteger(x1))){
-      var x = document.getElementById("x1");
-      x.innerHTML = error;
-      flag = 1;
-    }
-    else{
-      var x = document.getElementById("x1");
-      var blank = " ";
-      x.innerHTML = " ";
-    }
-    if(!(Number.isInteger(x2))){
-      var x = document.getElementById("x2");
-      x.innerHTML = error;
-      flag = 1;
-    }
-    else{
-      var x = document.getElementById("x2");
-      var blank = " ";
-      x.innerHTML = " ";
-    }
-    if(!(Number.isInteger(y1))){
-      var x = document.getElementById("y1");
-      x.innerHTML = error;
-      flag = 1;
-    }
-    else{
-      var x = document.getElementById("y1");
-      var blank = " ";
-      x.innerHTML = " ";
-    }
-    if(!(Number.isInteger(y2))){
-      var x = document.getElementById("y2");
-      x.innerHTML = error;
-      flag = 1;
-    }
-    else{
-      var x = document.getElementById("y2");
-      var blank = " ";
-      x.innerHTML = " ";
-    }
-    if(flag == 1)
-      return 'Error';
-}
+  $('#submitButton').click(generateTable);
 
-//Similar to function about but strictly for floats
-function checkForFloats(x1,x2,y1,y2){
-  
-  var message = "It seems you have entered a float, it will be converted to integer in the table";
+});
+/*Custom method to check for floats and display error message
+Learned about this from: https://stackoverflow.com/questions/241145/jquery-validate-plugin-how-to-create-a-simple-custom-rule*/
+jQuery.validator.addMethod("checkFloat", function(value, element) {
+    return this.optional(element) || (Number.isInteger(parseFloat(value)));
+}, "Floats are not supported, please enter integers only.");
 
-  if((!Number.isInteger(x1))){
-    var x = document.getElementById("x12");
-    x.innerHTML = message;
-  }
-  else{
-    var x = document.getElementById("x12");
-    var blank = " ";
-    x.innerHTML = " ";
-  }
-  if((!Number.isInteger(x2))){
-    var x = document.getElementById("x22");
-    x.innerHTML = message;
-  }
-  else{
-    var x = document.getElementById("x22");
-    var blank = " ";
-    x.innerHTML = " ";
-  }
-  if((!Number.isInteger(y1))){
-    var x = document.getElementById("y12");
-    x.innerHTML = message;
-  }
-  else{
-    var x = document.getElementById("y12");
-    var blank = " ";
-    x.innerHTML = " ";
-  }
-  if((!Number.isInteger(y2))){
-    var x = document.getElementById("y22");
-    x.innerHTML = message;
-  }
-  else{
-    var x = document.getElementById("y22");
-    var blank = " ";
-    x.innerHTML = " ";
-  }
-  return;
-}
+//custom rule to ensure the range entered does not crash website
+jQuery.validator.addMethod("checkRange", function(value, element) {
+    return this.optional(element) || (-500 <= value)&& (value <= 500);
+}, "Please enter an integer between -500 and 500");
